@@ -4,7 +4,20 @@ Contains the Game class with all turn management, combat, and AI logic.
 """
 
 from typing import List, Optional, Callable
-from tkinter import messagebox
+# Headless-safe import: tkinter may be unavailable on server runtimes
+try:
+    from tkinter import messagebox  # type: ignore
+except Exception:
+    class _MessageBoxStub:
+        def showinfo(self, *args, **kwargs):
+            return None
+        def showwarning(self, *args, **kwargs):
+            return None
+        def showerror(self, *args, **kwargs):
+            return None
+        def askyesno(self, *args, **kwargs):
+            return False
+    messagebox = _MessageBoxStub()
 from .models import Card, Player
 from .ai_engine import DataDrivenAI
 
