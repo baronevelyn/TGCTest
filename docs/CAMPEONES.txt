@@ -1,0 +1,250 @@
+═══════════════════════════════════════════════════════════════════════════
+                         GUÍA DE CAMPEONES - MINI TCG
+═══════════════════════════════════════════════════════════════════════════
+
+Cada campeón tiene una habilidad pasiva única que define tu estrategia de juego.
+Elige sabiamente según tu estilo de juego preferido.
+
+═══════════════════════════════════════════════════════════════════════════
+
+🔥 1. ARCANUS - MAGO DE BATALLA
+═══════════════════════════════════════════════════════════════════════════
+❤️  Vida Inicial: 25 HP
+⚡ Habilidad: "Maestría Arcana"
+   → Los hechizos cuestan 1 maná menos (mínimo 1)
+
+📝 Descripción:
+   Arcanus es un maestro de las artes arcanas que ha perfeccionado la 
+   eficiencia en el lanzamiento de hechizos. Su dominio mágico le permite
+   canalizar energía más rápido que otros magos.
+
+💡 Estrategia:
+   - Ideal para mazos enfocados en hechizos
+   - Lanza más hechizos por turno que otros campeones
+   - Combina hechizos de daño directo con tropas pequeñas
+   - Conserva hechizos para momentos clave
+   - Hechizos de coste 1 son gratis (mínimo 1 maná)
+
+⚠️  Debilidad:
+   - Vida baja (25 HP) - vulnerable a estrategias agresivas
+   - Depende de tener hechizos en mano
+
+
+═══════════════════════════════════════════════════════════════════════════
+
+⚔️  2. BRUTUS - SEÑOR DE LA GUERRA
+═══════════════════════════════════════════════════════════════════════════
+❤️  Vida Inicial: 35 HP
+⚡ Habilidad: "Sed de Sangre"
+   → Todas tus tropas tienen +1 ATK
+
+📝 Descripción:
+   Brutus es un comandante militar legendario cuya presencia en el campo
+   de batalla inspira ferocidad en sus soldados. Sus tropas luchan con
+   una intensidad sobrenatural.
+
+💡 Estrategia:
+   - Perfecto para estrategias agresivas con muchas tropas
+   - Cada tropa es más eficiente en combate
+   - Excelente para trades favorables
+   - Combina bien con tropas baratas (más daño por menos maná)
+   - Presión constante desde el inicio del juego
+
+⚠️  Debilidad:
+   - Vulnerable a hechizos de área (las tropas siguen con HP normal)
+   - Requiere mantener tropas en el campo
+
+
+═══════════════════════════════════════════════════════════════════════════
+
+🌟 3. MYSTARA - INVOCADORA
+═══════════════════════════════════════════════════════════════════════════
+❤️  Vida Inicial: 28 HP
+⚡ Habilidad: "Ejército Infinito"
+   → Al inicio de tu turno, invoca un Token 1/1
+
+📝 Descripción:
+   Mystara posee el poder de invocar criaturas del éter. Aunque estas
+   invocaciones son débiles individualmente, su número constante puede
+   abrumar al enemigo.
+
+💡 Estrategia:
+   - Genera ventaja de cartas pasivamente
+   - Excelente para estrategias de bloqueo defensivo
+   - Los tokens pueden atacar o bloquear según necesites
+   - Funciona bien con estrategias de desgaste
+   - Nunca te quedas sin tropas
+
+⚠️  Debilidad:
+   - Vida moderada (28 HP)
+   - Los tokens son débiles individualmente
+   - Vulnerable a hechizos de área
+
+
+═══════════════════════════════════════════════════════════════════════════
+
+🗡️  4. SHADOWBLADE - ASESINO
+═══════════════════════════════════════════════════════════════════════════
+❤️  Vida Inicial: 22 HP
+⚡ Habilidad: "Golpe Letal"
+   → Tropas de coste 3 o menos tienen +1 ATK y Prisa
+
+📝 Descripción:
+   Shadowblade es un asesino que se especializa en ataques rápidos y
+   letales. Sus tropas ligeras golpean fuerte e inmediatamente, sin dar
+   tiempo al enemigo para reaccionar.
+
+💡 Estrategia:
+   - Estrategia ultra-agresiva con tropas baratas
+   - Las tropas atacan el mismo turno que entran (¡Prisa!)
+   - Golpes sorpresa constantes
+   - Termina partidas rápidamente
+   - Combina con hechizos de daño directo para finalizar
+
+⚠️  Debilidad:
+   - Vida MUY baja (22 HP) - el campeón más frágil
+   - Si pierdes momentum, es difícil recuperarse
+   - Tropas caras no reciben beneficio
+
+
+═══════════════════════════════════════════════════════════════════════════
+
+✨ 5. LUMINA - CLÉRIGO
+═══════════════════════════════════════════════════════════════════════════
+❤️  Vida Inicial: 32 HP
+⚡ Habilidad: "Bendición Divina"
+   → Al inicio de tu turno, cura 1 HP a todas tus tropas
+
+📝 Descripción:
+   Lumina es una clérigo dedicada que irradia energía curativa. Su
+   presencia mantiene a sus aliados en el campo de batalla por más tiempo,
+   frustrando los planes del enemigo.
+
+💡 Estrategia:
+   - Ideal para estrategias de control y desgaste
+   - Las tropas son más difíciles de matar
+   - Excelente contra estrategias de daño por pequeños incrementos
+   - Bloquea ataques sin miedo (tus tropas se curan)
+   - Combina con tropas de alta vida para máximo beneficio
+
+⚠️  Debilidad:
+   - No ayuda contra destrucción instantánea
+   - Pasiva solo útil si tienes tropas en juego
+   - Menos agresiva que otros campeones
+
+
+═══════════════════════════════════════════════════════════════════════════
+
+🧠 6. TACTICUS - ESTRATEGA
+═══════════════════════════════════════════════════════════════════════════
+❤️  Vida Inicial: 30 HP
+⚡ Habilidad: "Visión Táctica"
+   → Empiezas con 6 cartas, robas 2 al inicio del turno
+
+📝 Descripción:
+   Tacticus es un genio estratégico que siempre tiene un plan. Su visión
+   táctica superior le permite tener más opciones disponibles en todo
+   momento.
+
+💡 Estrategia:
+   - Máxima flexibilidad y opciones
+   - Nunca te quedas sin cartas
+   - Mano inicial de 6 cartas (vs 5 normal)
+   - Robas 2 cartas por turno (vs 1 normal)
+   - Adapta tu estrategia según la situación
+   - Encuentra respuestas más rápido
+
+⚠️  Debilidad:
+   - Puedes quedarte sin maná para jugar tantas cartas
+   - Requiere decisiones más complejas (más cartas = más opciones)
+   - Sin beneficios en combate directo
+
+
+═══════════════════════════════════════════════════════════════════════════
+
+💀 7. RAGNAR - BERSERKER
+═══════════════════════════════════════════════════════════════════════════
+❤️  Vida Inicial: 40 HP
+⚡ Habilidad: "Furia Imparable"
+   → No puedes bloquear ataques. Todas tus tropas tienen Furia
+
+📝 Descripción:
+   Ragnar es un berserker que no conoce el miedo ni la defensa. Su
+   filosofía es simple: atacar siempre, atacar con todo. Sus tropas
+   comparten esta mentalidad, atacando dos veces por turno.
+
+💡 Estrategia:
+   - Todo ataque, cero defensa
+   - TODAS las tropas pueden atacar dos veces por turno (Furia)
+   - Daño masivo por turno
+   - Vida alta (40 HP) para compensar la incapacidad de bloquear
+   - Termina partidas rápido o pierde intentándolo
+   - ¡Ataca sin parar!
+
+⚠️  Debilidad:
+   - NO PUEDES BLOQUEAR - recibes todo el daño enemigo
+   - Requiere juego agresivo constante
+   - Si el enemigo tiene más tropas, pierdes rápido
+
+
+═══════════════════════════════════════════════════════════════════════════
+
+🌿 8. SYLVANA - DRUIDA
+═══════════════════════════════════════════════════════════════════════════
+❤️  Vida Inicial: 28 HP
+⚡ Habilidad: "Crecimiento Natural"
+   → Las tropas con 4+ HP ganan +1/+1
+
+📝 Descripción:
+   Sylvana es una druida que canaliza el poder de la naturaleza para
+   fortalecer a las criaturas más grandes. Sus bestias crecen aún más
+   fuertes bajo su cuidado.
+
+💡 Estrategia:
+   - Enfócate en tropas grandes (4+ HP original)
+   - Las tropas grandes se vuelven ENORMES (+1/+1)
+   - Excelente para estrategia midrange/control
+   - Domina el tablero con criaturas superiores
+   - Trades extremadamente favorables
+   - Tropas difíciles de eliminar
+
+⚠️  Debilidad:
+   - Tropas pequeñas no reciben beneficio
+   - Inicio lento (tropas grandes son caras)
+   - Vulnerable a hechizos de destrucción
+
+
+═══════════════════════════════════════════════════════════════════════════
+
+📊 TABLA COMPARATIVA
+═══════════════════════════════════════════════════════════════════════════
+
+Campeón       | Vida | Estilo      | Dificultad | Agresividad
+--------------|------|-------------|------------|-------------
+Arcanus       |  25  | Control     | Media      | Media
+Brutus        |  35  | Aggro       | Baja       | Alta
+Mystara       |  28  | Desgaste    | Media      | Baja
+Shadowblade   |  22  | Aggro       | Alta       | Muy Alta
+Lumina        |  32  | Control     | Baja       | Baja
+Tacticus      |  30  | Flex        | Alta       | Media
+Ragnar        |  40  | All-in      | Media      | Extrema
+Sylvana       |  28  | Midrange    | Media      | Media
+
+
+═══════════════════════════════════════════════════════════════════════════
+
+💡 CONSEJOS GENERALES
+═══════════════════════════════════════════════════════════════════════════
+
+1. La vida inicial del campeón determina tu margen de error
+2. Algunas habilidades se activan automáticamente (Mystara, Lumina, Tacticus)
+3. Otras modifican permanentemente tus cartas (Brutus, Shadowblade, Sylvana)
+4. Ragnar es único: no puede bloquear pero tiene la vida más alta
+5. Arcanus es el mejor para mazos de hechizos
+6. El mejor campeón depende de tu estilo de juego personal
+
+═══════════════════════════════════════════════════════════════════════════
+
+¡Experimenta con cada campeón para descubrir tu favorito!
+
+═══════════════════════════════════════════════════════════════════════════

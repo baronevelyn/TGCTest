@@ -1,0 +1,432 @@
+================================================================================
+                    SISTEMA DE DIFICULTAD DE IA - GUÍA COMPLETA
+================================================================================
+
+📋 DESCRIPCIÓN GENERAL
+────────────────────────────────────────────────────────────────────────────
+El sistema de dificultad de IA está basado en 280,000 simulaciones de batalla
+y proporciona 10 niveles de dificultad con construcción de mazos optimizada.
+
+Cada nivel ajusta:
+  • Campeones disponibles (débiles → top tier)
+  • Calidad de construcción de mazo (0% → 100% optimizado)
+  • Calidad de decisiones en juego (0% → 100% óptimas)
+  • Probabilidad de errores (90% → 0%)
+
+
+🎯 NIVELES DE DIFICULTAD
+────────────────────────────────────────────────────────────────────────────
+
+NIVEL 1: 🟢 Tutorial - Principiante Absoluto
+────────────────────────────────────────────
+Campeones: Sylvana, Lumina, Arcanus (los más débiles)
+Calidad de mazo: 10% optimizado
+Calidad de juego: 10% óptima
+Chance de error: 90%
+
+Descripción:
+  • Usa solo los campeones más débiles del juego
+  • Mazos prácticamente aleatorios
+  • Comete errores constantemente
+  • Perfecto para aprender las mecánicas básicas
+
+Win Rate Estimado del Jugador: 85-95%
+
+
+NIVEL 2: 🟢 Novato - Aprendiendo lo Básico
+────────────────────────────────────────────
+Campeones: Sylvana, Lumina, Arcanus
+Calidad de mazo: 20% optimizado
+Calidad de juego: 20% óptima
+Chance de error: 80%
+
+Descripción:
+  • Campeones débiles
+  • Mazos mayormente aleatorios con algo de estructura
+  • Comete errores muy frecuentes
+  • Para jugadores que ya entienden las reglas básicas
+
+Win Rate Estimado del Jugador: 75-85%
+
+
+NIVEL 3: 🟡 Aficionado - Entiende el Juego
+────────────────────────────────────────────
+Campeones: Arcanus, Tacticus, Shadowblade, Lumina
+Calidad de mazo: 30% optimizado
+Calidad de juego: 30% óptima
+Chance de error: 70%
+
+Descripción:
+  • Campeones de tier medio-bajo
+  • Mazos con algo de optimización
+  • Algunos errores tácticos visibles
+  • Desafío básico para jugadores casuales
+
+Win Rate Estimado del Jugador: 65-75%
+
+
+NIVEL 4: 🟡 Competente - Estrategia Básica
+────────────────────────────────────────────
+Campeones: Arcanus, Tacticus, Shadowblade, Lumina
+Calidad de mazo: 40% optimizado
+Calidad de juego: 40% óptima
+Chance de error: 60%
+
+Descripción:
+  • Campeones mediocres
+  • Mazos medio optimizados
+  • Errores ocasionales pero juega razonablemente
+  • Requiere que el jugador piense estratégicamente
+
+Win Rate Estimado del Jugador: 55-65%
+
+
+NIVEL 5: 🟠 Avanzado - Buen Jugador
+────────────────────────────────────────────
+Campeones: Shadowblade, Tacticus, Brutus, Ragnar
+Calidad de mazo: 50% optimizado
+Calidad de juego: 50% óptima
+Chance de error: 50%
+
+Descripción:
+  • Buenos campeones (incluye algunos top tier)
+  • Mazos bien construidos con sinergias
+  • Juega decentemente, 50/50 entre bueno y malo
+  • Desafío moderado, partidas equilibradas
+
+Win Rate Estimado del Jugador: 45-55% (Equilibrado)
+
+
+NIVEL 6: 🟠 Experto - Construcción Optimizada
+────────────────────────────────────────────
+Campeones: Shadowblade, Tacticus, Brutus, Ragnar
+Calidad de mazo: 60% optimizado
+Calidad de juego: 60% óptima
+Chance de error: 40%
+
+Descripción:
+  • Buenos campeones
+  • Mazos muy optimizados
+  • Pocas decisiones claramente malas
+  • Requiere juego sólido del jugador
+
+Win Rate Estimado del Jugador: 35-45%
+
+
+NIVEL 7: 🔴 Maestro - Juego Casi Perfecto
+────────────────────────────────────────────
+Campeones: Brutus, Ragnar, Mystara (solo top tier)
+Calidad de mazo: 70% optimizado
+Calidad de juego: 70% óptima
+Chance de error: 30%
+
+Descripción:
+  • Solo los mejores campeones (73% WR según simulaciones)
+  • Mazos muy optimizados con estrategias específicas
+  • Casi no comete errores
+  • Muy difícil de vencer
+
+Win Rate Estimado del Jugador: 25-35%
+
+
+NIVEL 8: 🔴 Gran Maestro - Meta Dominante
+────────────────────────────────────────────
+Campeones: Brutus, Ragnar, Mystara
+Calidad de mazo: 80% optimizado
+Calidad de juego: 80% óptima
+Chance de error: 20%
+
+Descripción:
+  • Solo top tier
+  • Mazos casi perfectos
+  • Juego experto con decisiones muy calculadas
+  • Extremadamente difícil
+
+Win Rate Estimado del Jugador: 15-25%
+
+
+NIVEL 9: ⚫ Leyenda - Top 1% Mundial
+────────────────────────────────────────────
+Campeones: Mystara, Brutus, Ragnar
+Calidad de mazo: 90% optimizado
+Calidad de juego: 90% óptima
+Chance de error: 10%
+
+Descripción:
+  • Solo los 3 mejores campeones del meta
+  • Mazos optimizados al 90%
+  • Juego casi perfecto
+  • Solo para los mejores jugadores
+
+Win Rate Estimado del Jugador: 10-20%
+
+
+NIVEL 10: 💀 Imposible - IA Perfecta
+────────────────────────────────────────────
+Campeones: Mystara (73.76% WR), Brutus (73.27%), Ragnar (72.19%)
+Calidad de mazo: 100% optimizado
+Calidad de juego: 100% óptima
+Chance de error: 0%
+
+Descripción:
+  • Solo los campeones con mayor win rate de las simulaciones
+  • Mazos 100% optimizados según datos
+  • IA perfecta que nunca comete errores
+  • Prácticamente imbatible
+
+Win Rate Estimado del Jugador: 5-15%
+
+
+📊 ESTRATEGIAS DE CONSTRUCCIÓN DE MAZOS POR CAMPEÓN
+────────────────────────────────────────────────────────────────────────────
+
+MYSTARA (73.76% WR - MEJOR CAMPEÓN)
+────────────────────────────────────
+Pasiva: Genera 2 tokens 1/1 al inicio de turno
+Estrategia: Control/Valor con tokens
+Ratio de hechizos: 40% (16 hechizos / 24 tropas)
+Tropas preferidas: Guardian, Wall, Golem, Dragon (defensivas)
+Hechizos preferidos: Curación, Curación Mayor, Tormenta de Fuego, Destierro
+Coste promedio: 3.5 (late game)
+
+Construcción de mazo (Alta Calidad):
+  • Prioriza tropas con taunt para proteger tokens
+  • Hechizos de remoción para controlar el board
+  • Curaciones para sobrevivir hasta dominar con tokens
+  • Los tokens generan ventaja de cartas exponencial
+
+
+BRUTUS (73.27% WR - S-TIER)
+────────────────────────────────────
+Pasiva: Tropas aliadas ganan +1 ATK
+Estrategia: Aggro/Tempo
+Ratio de hechizos: 20% (8 hechizos / 32 tropas)
+Tropas preferidas: Goblin, Wolf, Archer, Knight, Berserker
+Hechizos preferidos: Rayo, Bola de Fuego, Descarga Eléctrica
+Coste promedio: 2.5 (muy barato)
+
+Construcción de mazo (Alta Calidad):
+  • Máximo número de tropas baratas (Goblins 5.0 efficiency)
+  • Daño directo para cerrar partidas
+  • Tropas con Furia (se benefician del +1 ATK)
+  • Curva de maná muy baja para presión temprana
+
+
+RAGNAR (72.19% WR - S-TIER)
+────────────────────────────────────
+Pasiva: +1 carta al inicio de turno
+Estrategia: Midrange con ventaja de cartas
+Ratio de hechizos: 25% (10 hechizos / 30 tropas)
+Tropas preferidas: Golem, Mage, Dragon, Berserker, Knight
+Hechizos preferidos: Rayo, Bola de Fuego, Descarga Eléctrica
+Coste promedio: 3.5 (tropas grandes)
+
+Construcción de mazo (Alta Calidad):
+  • Tropas de alto valor (Golem, Mage, Dragon)
+  • Nunca se queda sin cartas gracias a la pasiva
+  • Hechizos de remoción eficientes
+  • Domina el mid y late game
+
+
+SHADOWBLADE (47.41% WR - C-TIER)
+────────────────────────────────────
+Pasiva: Tropas ≤3 coste ganan +1 HP
+Estrategia: Aggro/Tempo con tropas baratas
+Ratio de hechizos: 35% (14 hechizos / 26 tropas)
+Tropas preferidas: Wolf, Berserker, Archer, Knight, Bat (≤3 coste)
+Hechizos preferidos: Rayo, Bola de Fuego, Descarga Eléctrica, Destierro
+Coste promedio: 2.0 (muy barato)
+
+Construcción de mazo (Alta Calidad):
+  • Solo tropas de 3 o menos coste
+  • Máximo valor de tropas baratas
+  • Hechizos de remoción y daño directo
+  • Estrategia all-in early game
+
+
+TACTICUS (42.50% WR - C-TIER)
+────────────────────────────────────
+Pasiva: Descarta 1, roba 2 al inicio de turno
+Estrategia: Control con filtrado de mazo
+Ratio de hechizos: 40% (16 hechizos / 24 tropas)
+Tropas preferidas: Golem, Dragon, Mage, Guardian, Necromancer
+Hechizos preferidos: Destierro, Dibujar Cartas, Curación Mayor, Tormenta
+Coste promedio: 3.8 (caro)
+
+Construcción de mazo (Alta Calidad):
+  • Muchos hechizos para control
+  • Tropas de alto impacto
+  • Aprovecha el filtrado para encontrar respuestas
+  • Late game oriented
+
+
+ARCANUS (38.15% WR - D-TIER)
+────────────────────────────────────
+Pasiva: Hechizos cuestan -1 maná
+Estrategia: Spell-heavy control
+Ratio de hechizos: 50% (20 hechizos / 20 tropas)
+Tropas preferidas: Guardian, Wall, Mage, Dragon
+Hechizos preferidos: Bola de Fuego, Destierro, Rayo, Tormenta de Fuego
+Coste promedio: 3.2
+
+Construcción de mazo (Alta Calidad):
+  • Máximo número de hechizos permitido
+  • Tropas defensivas para sobrevivir
+  • Hechizos de remoción muy eficientes (-1 coste)
+  • Win condition: agotar recursos del oponente
+
+
+LUMINA (31.86% WR - D-TIER)
+────────────────────────────────────
+Pasiva: Cura 2 HP al inicio de turno
+Estrategia: Control/Heal
+Ratio de hechizos: 30% (12 hechizos / 28 tropas)
+Tropas preferidas: Guardian, Wall, Knight, Golem, Mage
+Hechizos preferidos: Curación, Curación Mayor, Rayo, Destierro
+Coste promedio: 3.0
+
+Construcción de mazo (Alta Calidad):
+  • Tropas defensivas con taunt
+  • Hechizos de curación adicionales
+  • Remoción para control
+  • Problema: curación no previene daño directo, muy lenta
+
+
+SYLVANA (20.87% WR - F-TIER)
+────────────────────────────────────
+Pasiva: Tropas ≥4 HP ganan +1/+1
+Estrategia: Big creatures
+Ratio de hechizos: 25% (10 hechizos / 30 tropas)
+Tropas preferidas: Golem, Mage, Knight, Dragon, Guardian (≥4 HP)
+Hechizos preferidos: Curación, Rayo, Destierro
+Coste promedio: 3.8 (muy caro)
+
+Construcción de mazo (Alta Calidad):
+  • Solo tropas con 4+ HP
+  • Tropas grandes que se benefician del buff
+  • Muy lenta, vulnerable al aggro
+  • Peor campeón según simulaciones
+
+
+🎮 TIER LIST OFICIAL (Basado en 280,000 simulaciones)
+────────────────────────────────────────────────────────────────────────────
+
+S-TIER (73%+ WR):
+  1. Mystara - 73.76% WR ⭐ MEJOR CAMPEÓN
+  2. Brutus  - 73.27% WR
+  3. Ragnar  - 72.19% WR
+
+A-TIER (45-55% WR):
+  4. Shadowblade - 47.41% WR
+
+C-TIER (35-45% WR):
+  5. Tacticus - 42.50% WR
+
+D-TIER (25-35% WR):
+  6. Arcanus - 38.15% WR
+  7. Lumina  - 31.86% WR
+
+F-TIER (<25% WR):
+  8. Sylvana - 20.87% WR ⚠️ PEOR CAMPEÓN
+
+
+💡 RECOMENDACIONES POR NIVEL DE JUGADOR
+────────────────────────────────────────────────────────────────────────────
+
+PRINCIPIANTES (Primera vez jugando):
+  → Empezar en Nivel 1 o 2
+  → Aprender mecánicas básicas sin presión
+  → Experimentar con diferentes campeones
+
+JUGADORES CASUALES (Conocen las reglas):
+  → Nivel 3-5 para partidas divertidas
+  → Balance entre desafío y victoria
+  → Nivel 5 es el más equilibrado (50/50)
+
+JUGADORES COMPETITIVOS (Buscan mejorar):
+  → Nivel 6-8 para verdadero desafío
+  → Fuerza a optimizar construcción de mazos
+  → Requiere decisiones tácticas precisas
+
+MAESTROS DEL JUEGO (Conocen todas las estrategias):
+  → Nivel 9-10 para prueba definitiva
+  → IA casi perfecta
+  → Solo ganable con juego excepcional y suerte
+
+
+⚙️ ARCHIVOS DEL SISTEMA
+────────────────────────────────────────────────────────────────────────────
+
+ai_difficulty.py
+  • Clase AIDifficulty: Configuración de cada nivel
+  • Clase DeckBuilder: Construcción optimizada de mazos
+  • Clase SmartAI: IA completa con selección de campeón y mazo
+  • Tier lists de tropas y hechizos basados en simulaciones
+
+difficulty_selector.py
+  • Interfaz gráfica para seleccionar dificultad
+  • Muestra información detallada de cada nivel
+  • Integración con el sistema de juego
+
+main_menu.py
+  • Menú principal del juego
+  • Opciones: Jugar vs IA, Constructor de Mazos, Simulaciones, etc.
+  • Integración completa del sistema de dificultad
+
+game_analysis.py
+  • Sistema de simulación de 280,000 batallas
+  • Estadísticas de win rates por campeón
+  • Análisis de matchups
+
+SIMULACION_10000_RESULTADOS.txt
+  • Resultados completos de simulaciones
+  • Win rates exactos de cada campeón
+  • Matriz de matchups campeón vs campeón
+
+
+📖 USO DEL SISTEMA
+────────────────────────────────────────────────────────────────────────────
+
+1. INICIAR EL JUEGO:
+   python main_menu.py
+
+2. SELECCIONAR "JUGAR VS IA"
+
+3. ELEGIR NIVEL DE DIFICULTAD (1-10)
+
+4. EL SISTEMA AUTOMÁTICAMENTE:
+   • Selecciona un campeón del pool correspondiente al nivel
+   • Construye un mazo optimizado según calidad del nivel
+   • Inicia la partida con la IA configurada
+
+5. DURANTE EL JUEGO:
+   • La IA cometerá errores según su nivel
+   • Mazos estarán optimizados según porcentaje del nivel
+   • Nombre de la IA mostrará su nivel de dificultad
+
+
+🔧 INTEGRACIÓN CON CÓDIGO EXISTENTE
+────────────────────────────────────────────────────────────────────────────
+
+# Crear IA de nivel específico
+from ai_difficulty import SmartAI
+
+ai = SmartAI(difficulty=7)  # Nivel 7: Maestro
+ai_player = ai.create_player(deck_size=40)
+
+# Usar en partida
+from game_logic import Game
+game = Game(player, ai_player, on_game_over_callback)
+game.start()
+
+
+# Obtener información del nivel
+info = ai.get_difficulty_info()
+print(f"Nombre: {info['name']}")
+print(f"Campeones: {info['champions']}")
+print(f"Calidad: {info['deck_quality']}")
+
+
+════════════════════════════════════════════════════════════════════════════
+                            FIN DE LA DOCUMENTACIÓN
+════════════════════════════════════════════════════════════════════════════
