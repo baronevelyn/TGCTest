@@ -145,8 +145,8 @@ def _start_quick_match():
     from src.multiplayer.network_manager import NetworkManager
     from src.multiplayer.multiplayer_ui import MultiplayerGameUI
     
-    # Connect to server
-    network = NetworkManager('http://localhost:5000')
+    # Connect to server (reads from server_config.txt)
+    network = NetworkManager()
     
     print("🔌 Attempting to connect to server...")
     if not network.connect():
@@ -327,8 +327,8 @@ def _find_custom_match(deck_data: list, champion_data: dict):
     from src.multiplayer.network_manager import NetworkManager
     from src.multiplayer.multiplayer_ui import MultiplayerGameUI
     
-    # Connect to server
-    network = NetworkManager('http://localhost:5000')
+    # Connect to server (reads from server_config.txt)
+    network = NetworkManager()
     
     if not network.connect():
         messagebox.showerror("Connection Error", "Could not connect to server.\nMake sure the server is running.")
