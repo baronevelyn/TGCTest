@@ -6,7 +6,10 @@ Contains Card, Deck, and Player classes.
 import random
 from dataclasses import dataclass
 from typing import List, Optional
-import tkinter as tk
+try:
+    import tkinter as tk  # UI available in client runtime
+except Exception:
+    tk = None  # Headless/server runtime without Tk
 
 
 @dataclass
@@ -31,9 +34,15 @@ class Card:
     attacked_count: int = 0  # for Furia: track attacks this turn
 
 
-class CardWidget(tk.Label):
-    """Typed widget to allow attaching a Card reference (helps static type checkers)."""
+class CardWidget(object):
+    """Widget placeholder for headless environments.
+    In client runtime, this is a tk.Label; on server, it's a lightweight stub.
+    """
     card: Optional[Card] = None
+    if tk is not None:
+        # Dynamically subclass tk.Label when tkinter is present
+        def __new__(cls, *args, **kwargs):
+            return tk.Label.__new__(tk.Label)
 
 
 class Deck:
