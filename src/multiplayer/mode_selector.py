@@ -94,14 +94,37 @@ class MultiplayerModeSelector:
             fg='#ecf0f1'
         ).pack(anchor='w', pady=(0, 10))
         
-        connection_var = tk.StringVar(value="local")
+        connection_var = tk.StringVar(value="online")
+        
+        # Online option (Render)
+        online_frame = tk.Frame(connection_frame, bg='#2c3e50', relief='raised', borderwidth=2)
+        online_frame.pack(fill='x', pady=5)
+        tk.Radiobutton(
+            online_frame,
+            text="🌍 Online (Servidor Render 24/7)",
+            variable=connection_var,
+            value="online",
+            font=('Arial', 11, 'bold'),
+            bg='#2c3e50',
+            fg='#2ecc71',
+            selectcolor='#34495e',
+            activebackground='#2c3e50',
+            activeforeground='#2ecc71'
+        ).pack(anchor='w', padx=10, pady=8)
+        tk.Label(
+            online_frame,
+            text="✅ Recomendado - Juega desde cualquier lugar del mundo",
+            font=('Arial', 9, 'italic'),
+            bg='#2c3e50',
+            fg='#95a5a6'
+        ).pack(anchor='w', padx=30, pady=(0, 8))
         
         # Local option
         local_frame = tk.Frame(connection_frame, bg='#2c3e50', relief='raised', borderwidth=2)
         local_frame.pack(fill='x', pady=5)
         tk.Radiobutton(
             local_frame,
-            text="🏠 Local (localhost:5000)",
+            text="🏠 Red Local (Personalizar URL)",
             variable=connection_var,
             value="local",
             font=('Arial', 11),
@@ -113,65 +136,19 @@ class MultiplayerModeSelector:
         ).pack(anchor='w', padx=10, pady=8)
         tk.Label(
             local_frame,
-            text="Same PC or local network",
+            text="Servidor propio o localhost (introduce la URL abajo)",
             font=('Arial', 9, 'italic'),
             bg='#2c3e50',
             fg='#95a5a6'
         ).pack(anchor='w', padx=30, pady=(0, 8))
         
-        # Hamachi option
-        hamachi_frame = tk.Frame(connection_frame, bg='#2c3e50', relief='raised', borderwidth=2)
-        hamachi_frame.pack(fill='x', pady=5)
-        tk.Radiobutton(
-            hamachi_frame,
-            text="🌐 Hamachi / LAN IP",
-            variable=connection_var,
-            value="hamachi",
-            font=('Arial', 11),
-            bg='#2c3e50',
-            fg='white',
-            selectcolor='#34495e',
-            activebackground='#2c3e50',
-            activeforeground='white'
-        ).pack(anchor='w', padx=10, pady=8)
-        tk.Label(
-            hamachi_frame,
-            text="Example: 25.123.45.67 or 192.168.1.100",
-            font=('Arial', 9, 'italic'),
-            bg='#2c3e50',
-            fg='#95a5a6'
-        ).pack(anchor='w', padx=30, pady=(0, 8))
-        
-        # ngrok option
-        ngrok_frame = tk.Frame(connection_frame, bg='#2c3e50', relief='raised', borderwidth=2)
-        ngrok_frame.pack(fill='x', pady=5)
-        tk.Radiobutton(
-            ngrok_frame,
-            text="🚀 ngrok / Custom URL",
-            variable=connection_var,
-            value="ngrok",
-            font=('Arial', 11),
-            bg='#2c3e50',
-            fg='white',
-            selectcolor='#34495e',
-            activebackground='#2c3e50',
-            activeforeground='white'
-        ).pack(anchor='w', padx=10, pady=8)
-        tk.Label(
-            ngrok_frame,
-            text="Example: https://abc123.ngrok-free.app",
-            font=('Arial', 9, 'italic'),
-            bg='#2c3e50',
-            fg='#95a5a6'
-        ).pack(anchor='w', padx=30, pady=(0, 8))
-        
-        # Custom IP/URL input
+        # Custom IP/URL input (only for local)
         input_frame = tk.Frame(self.window, bg='#1a1a2e')
         input_frame.pack(pady=20, padx=40, fill='x')
         
         tk.Label(
             input_frame,
-            text="Server Address (leave empty for localhost):",
+            text="URL del Servidor (solo para Red Local):",
             font=('Arial', 10),
             bg='#1a1a2e',
             fg='#ecf0f1'
@@ -186,10 +163,11 @@ class MultiplayerModeSelector:
             relief='flat'
         )
         server_entry.pack(fill='x', ipady=8, pady=(0, 5))
+        server_entry.insert(0, "http://localhost:5000")
         
         hint_label = tk.Label(
             input_frame,
-            text="💡 Tip: Leave empty to use default (localhost:5000)",
+            text="💡 Ejemplos: http://localhost:5000 | http://192.168.1.100:5000 | https://tu-servidor.com",
             font=('Arial', 9, 'italic'),
             bg='#1a1a2e',
             fg='#95a5a6'
@@ -208,20 +186,14 @@ class MultiplayerModeSelector:
             custom_address = server_entry.get().strip()
             
             # Determine server URL
-            if custom_address:
-                # User provided custom address
-                if not custom_address.startswith('http'):
-                    # Assume it's an IP, add http://
-                    server_url = f"http://{custom_address}:5000"
-                else:
-                    # It's a full URL
-                    server_url = custom_address
+            if connection_type == "online":
+                # Use Render server
+                server_url = "https://tgctest.onrender.com"
             else:
-                # Use default based on connection type
-                if connection_type == "local":
-                    server_url = "http://localhost:5000"
+                # Local network - use custom URL or default
+                if custom_address:
+                    server_url = custom_address
                 else:
-                    # For hamachi/ngrok without custom input, use localhost
                     server_url = "http://localhost:5000"
             
             # Save to config file
@@ -236,7 +208,8 @@ class MultiplayerModeSelector:
                 print(f"⚠️ Could not save config: {e}")
             
             # Close config window and show mode selector
-            self.window.destroy()
+            if self.window:
+                self.window.destroy()
             self._show_mode_selector()
         
         tk.Button(
