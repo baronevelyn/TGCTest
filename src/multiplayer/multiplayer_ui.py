@@ -1726,6 +1726,9 @@ class MultiplayerGameUI:
     def update_player_stats(self, life: int, mana: int, max_mana: int):
         """Update my stats"""
         # Check if anything changed
+        # Clamp life to >= 0
+        if life < 0:
+            life = 0
         new_hash = f"{life}:{mana}:{max_mana}"
         if new_hash == self._last_update_hash.get('my_stats', ''):
             return  # No changes
@@ -1735,10 +1738,15 @@ class MultiplayerGameUI:
         self.my_mana = mana
         self.my_max_mana = max_mana
         self.my_info_label.config(text=f"🎮 {self.player_name} | ❤️ {life} | 💎 {mana}/{max_mana}")
+        # Check game over (only if opponent already known or during match)
+        if life == 0:
+            self._handle_game_over(winner="OPPONENT")
     
     def update_opponent_stats(self, life: int, mana: int, max_mana: int, hand_count: int):
         """Update opponent stats"""
         # Check if anything changed
+        if life < 0:
+            life = 0
         new_hash = f"{life}:{mana}:{max_mana}:{hand_count}"
         if new_hash == self._last_update_hash.get('opponent_stats', ''):
             return  # No changes
@@ -1751,6 +1759,26 @@ class MultiplayerGameUI:
         self.opponent_info_label.config(
             text=f"🎮 {self.opponent_name} | ❤️ {life} | 💎 {mana}/{max_mana} | 🃏 {hand_count} cards"
         )
+        if life == 0:
+            self._handle_game_over(winner="YOU")
+
+    def _handle_game_over(self, winner: str):
+        """Internal: show game over once and lock UI."""
+        if getattr(self, '_game_over_shown', False):
+            return
+        self._game_over_shown = True
+        try:
+            import tkinter.messagebox as mb
+            mb.showinfo("Game Over", f"Winner: {winner}")
+        except Exception:
+            print(f"Game Over - Winner: {winner}")
+        # Disable interactive buttons
+        if hasattr(self, 'end_turn_button'):
+            self.end_turn_button.config(state=tk.DISABLED)
+        if hasattr(self, 'attack_button'):
+            self.attack_button.config(state=tk.DISABLED)
+        if hasattr(self, 'cancel_attack_button'):
+            self.cancel_attack_button.config(state=tk.DISABLED)
     
     def set_my_champion(self, name: str, ability: str):
         """Set my champion info"""
