@@ -776,6 +776,28 @@ def handle_chat_message(data):
             'is_me': is_sender
         }, to=player_sid)
 
+@socketio.on('game_over')
+def handle_game_over(data):
+    """Sincroniza fin de partida: broadcast del ganador y cierre de sala."""
+    room_id = data.get('room_id')
+    winner = data.get('winner', 'OPPONENT')
+    if not room_id or room_id not in active_rooms:
+        # Si no hay room, intentar deducir desde el jugador
+        # Broadcast directo a todos (fallback)
+        emit('game_over', {'winner': winner})
+        return
+    print(f'🏁 [{room_id[:12]}] game_over recibido, winner={winner}')
+    room_data = active_rooms[room_id]
+    # Avisar a ambos jugadores
+    for player_sid in room_data['players']:
+        emit('game_over', {'winner': winner}, to=player_sid)
+    # Dar un pequeño tiempo por si los clientes necesitan limpiar
+    socketio.sleep(0.5)
+    # Eliminar la sala
+    if room_id in active_rooms:
+        del active_rooms[room_id]
+        print(f'🗑️ Sala eliminada tras game_over: {room_id}')
+
 @socketio.on('ping')
 def handle_ping(data):
     """Responder a ping para medir latencia"""
