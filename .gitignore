@@ -46,6 +46,15 @@ logs/
 data/*.txt
 !data/__init__.py
 
+# Massive simulation results
+data/MASSIVE_SUMMARY_*.csv
+data/MASSIVE_CARD_STATS_*.csv
+data/MASSIVE_LOGS_*.txt
+data/GAME_LOGS_*.txt
+data/STATS_*.txt
+data/ANALISIS_*.txt
+data/COMPLETE_ANALYSIS_*.txt
+
 # Archived
 archived/
 
