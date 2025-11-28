@@ -1767,6 +1767,12 @@ class MultiplayerGameUI:
         if getattr(self, '_game_over_shown', False):
             return
         self._game_over_shown = True
+        # Try to notify network to sync
+        try:
+            if hasattr(self, 'network') and self.network:
+                self.network.emit_game_over('YOU' if winner == 'YOU' else 'OPPONENT')
+        except Exception:
+            pass
         try:
             import tkinter.messagebox as mb
             mb.showinfo("Game Over", f"Winner: {winner}")
@@ -1779,6 +1785,14 @@ class MultiplayerGameUI:
             self.attack_button.config(state=tk.DISABLED)
         if hasattr(self, 'cancel_attack_button'):
             self.cancel_attack_button.config(state=tk.DISABLED)
+
+    def attach_network(self, network):
+        """Attach NetworkManager and register game_over callback."""
+        self.network = network
+        try:
+            self.network.on_game_over = lambda w: self._handle_game_over(w)
+        except Exception:
+            pass
     
     def set_my_champion(self, name: str, ability: str):
         """Set my champion info"""

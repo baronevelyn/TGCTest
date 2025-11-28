@@ -32,6 +32,7 @@ class NetworkManager:
         self.on_game_state_update: Optional[Callable] = None  # NEW: Estado desde servidor
         self.on_chat_message: Optional[Callable] = None  # NEW: Mensajes de chat
         self.on_request_blockers: Optional[Callable] = None  # NEW: Solicitud de bloqueadores
+        self.on_game_over: Optional[Callable[[str], None]] = None  # NEW: ganador ('YOU'/'OPPONENT')
         
         # Configurar event handlers
         self._setup_handlers()
@@ -152,6 +153,29 @@ class NetworkManager:
             import time
             latency = (time.time() - data.get('timestamp', 0)) * 1000
             print(f'🏓 Latencia: {latency:.0f}ms')
+
+        @self.sio.on('game_over')  # type: ignore
+        def on_game_over(data):
+            winner = 'OPPONENT'
+            if isinstance(data, dict) and 'winner' in data:
+                winner = str(data['winner'])
+            if self.on_game_over:
+                try:
+                    self.on_game_over(winner)
+                except Exception:
+                    pass
+            else:
+                print(f"[network] game_over received: winner={winner}")
+
+    def emit_game_over(self, winner: str):
+        """Emite un evento game_over al servidor para sincronizar fin de partida."""
+        try:
+            payload = { 'winner': winner }
+            if self.room_id:
+                payload['room_id'] = self.room_id
+            self.sio.emit('game_over', payload)
+        except Exception as e:
+            print(f"[network] emit_game_over failed: {e}")
     
     def connect(self) -> bool:
         """Conectar al servidor"""
