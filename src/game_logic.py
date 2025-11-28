@@ -357,6 +357,13 @@ class Game:
                     target = target_player.active_zone[target_idx]
                     self.log_action(f"{spell.name} destroys {target.name}!")
                     self.destroy_card(target_player, target_idx)
+        # Clamp life values so they never go below 0
+        if self.player.life < 0:
+            self.player.life = 0
+        if self.ai.life < 0:
+            self.ai.life = 0
+        # After resolving spell effects, immediately check end of game
+        self.check_end()
         
         elif spell.spell_effect == 'draw':
             # Draw cards
@@ -691,8 +698,13 @@ class Game:
         # Don't check during initialization
         if not self.game_started:
             return
-        
-        if self.player.life <= 0 or self.ai.life <= 0:
+        # Clamp negatives to zero before evaluating
+        if self.player.life < 0:
+            self.player.life = 0
+        if self.ai.life < 0:
+            self.ai.life = 0
+
+        if self.player.life == 0 or self.ai.life == 0:
             winner = 'AI' if self.player.life <= 0 else 'Player'
             messagebox.showinfo('Game Over', f'{winner} wins!')
             if self.root:
