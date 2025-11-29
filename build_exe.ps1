@@ -96,3 +96,19 @@ if (Test-Path "server_config.txt") {
 
 Write-Host "✅ Build complete: dist/$distName/$distName.exe" -ForegroundColor Green
 Write-Host "📁 Distribute the dist/$distName folder. No Python required." -ForegroundColor Green
+
+# Make a top-level easy-access copy
+try {
+    $releaseDir = "release"
+    New-Item -ItemType Directory -Force -Path $releaseDir | Out-Null
+    $builtExe = Join-Path (Join-Path "dist" $distName) ("$distName.exe")
+    if (Test-Path $builtExe) {
+        $releaseExe = Join-Path $releaseDir ("$distName.exe")
+        Copy-Item $builtExe $releaseExe -Force
+        Write-Host "📦 Copied easy-access exe to $releaseExe" -ForegroundColor Cyan
+    } else {
+        Write-Host "⚠️ Built exe not found at $builtExe" -ForegroundColor Yellow
+    }
+} catch {
+    Write-Host "⚠️ Could not create easy-access copy: $($_.Exception.Message)" -ForegroundColor Yellow
+}
