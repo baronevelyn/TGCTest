@@ -224,11 +224,25 @@ def make_ui(game: Game):
     def update_ui():
         p = game.player
         a = game.ai
-        player_life_var.set(f'Player Life: {p.life}')
-        ai_life_var.set(f'AI Life: {a.life}')
+        # Show current/max life
+        try:
+            player_life_var.set(f'Player Life: {p.life}/{p.max_life}')
+        except Exception:
+            player_life_var.set(f'Player Life: {p.life}')
+        try:
+            ai_life_var.set(f'AI Life: {a.life}/{a.max_life}')
+        except Exception:
+            ai_life_var.set(f'AI Life: {a.life}')
         player_mana_var.set(f'Mana: {p.mana}/{p.max_mana}')
-        player_deck_var.set(f'Deck: {p.deck.count()}')
-        ai_deck_var.set(f'Deck: {a.deck.count()}')
+        # Show deck counts
+        try:
+            player_deck_var.set(f'Deck: {p.deck.count()}')
+        except Exception:
+            player_deck_var.set(f'Deck: {len(getattr(p.deck, "cards", []))}')
+        try:
+            ai_deck_var.set(f'Deck: {a.deck.count()}')
+        except Exception:
+            ai_deck_var.set(f'Deck: {len(getattr(a.deck, "cards", []))}')
         for widget in hand_frame.winfo_children():
             widget.destroy()
         # Preload images if possible for player's hand
