@@ -6,7 +6,8 @@ param(
     [switch]$Windowed = $true,
     [switch]$Clean = $false,
     [switch]$OneFile = $false,
-    [string]$PythonExe = ''
+    [string]$PythonExe = '',
+    [switch]$ForceVenv = $false
 )
 
 $ErrorActionPreference = 'Stop'
@@ -19,12 +20,19 @@ if ($PythonExe -ne '') {
         exit 1
     }
     Write-Host "Using specified Python interpreter: $PythonExe" -ForegroundColor Cyan
+    if ($ForceVenv -and (Test-Path ".venv")) {
+        Write-Host "ForceVenv: removing existing .venv" -ForegroundColor Yellow
+        Remove-Item -Recurse -Force .venv
+    }
     if (-not (Test-Path ".venv")) {
         Write-Host "Creating virtual environment (.venv) with specified Python" -ForegroundColor Cyan
         & $PythonExe -m venv .venv
     }
 } else {
-    # Ensure venv (optional). If you already have an env, comment this out.
+    if ($ForceVenv -and (Test-Path ".venv")) {
+        Write-Host "ForceVenv: removing existing .venv" -ForegroundColor Yellow
+        Remove-Item -Recurse -Force .venv
+    }
     if (-not (Test-Path ".venv")) {
         Write-Host "Creating virtual environment (.venv)" -ForegroundColor Cyan
         python -m venv .venv
@@ -42,13 +50,13 @@ if (-not (Test-Path $venvPython)) {
 Write-Host "Installing build dependencies (pyinstaller)..." -ForegroundColor Cyan
 & $venvPip install --upgrade pip | Out-Null
 & $venvPip install pyinstaller | Out-Null
-if ($PythonExe -ne '') {
-    Write-Host "Verifying tkinter availability in selected interpreter..." -ForegroundColor Cyan
-    try {
-        & $venvPython -c "import tkinter; print('tkinter present')" | Out-Null
-    } catch {
-        Write-Host "WARNING: tkinter missing; GUI will not work." -ForegroundColor Yellow
-    }
+Write-Host "Python version in venv:" -ForegroundColor Cyan
+& $venvPython -c "import sys; print(sys.version)"
+Write-Host "Verifying tkinter availability in venv..." -ForegroundColor Cyan
+try {
+    & $venvPython -c "import tkinter; import _tkinter; print('tkinter present')" | Out-Null
+} catch {
+    Write-Host "WARNING: tkinter missing OR broken; build will run headless fallback." -ForegroundColor Yellow
 }
 
 Write-Host "Installing app dependencies from requirements.txt..." -ForegroundColor Cyan
