@@ -4,7 +4,8 @@
 
 param(
     [switch]$Windowed = $true,
-    [switch]$Clean = $false
+    [switch]$Clean = $false,
+    [switch]$OneFile = $false
 )
 
 $ErrorActionPreference = 'Stop'
@@ -74,7 +75,11 @@ foreach ($item in $assets) {
     }
 }
 
-Write-Host "Building $distName.exe from $entry" -ForegroundColor Green
+if ($OneFile) {
+    Write-Host "Building ONEFILE $distName.exe from $entry" -ForegroundColor Green
+} else {
+    Write-Host "Building $distName.exe from $entry (folder mode)" -ForegroundColor Green
+}
 
 $pyiArgs = @(
     "--name", $distName,
@@ -82,30 +87,55 @@ $pyiArgs = @(
     "--clean",
     "--noconfirm"
 )
+if ($OneFile) { $pyiArgs += "--onefile" }
 if ($icon -ne "") { $pyiArgs += $icon }
 $pyiArgs += $addDataArgs
 $pyiArgs += $entry
 
 & $venvPython -m PyInstaller $pyiArgs
 
-# Copy server_config.txt if exists (runtime configurable)
-if (Test-Path "server_config.txt") {
-    New-Item -ItemType Directory -Force -Path (Join-Path "dist" $distName) | Out-Null
-    $targetCfg = Join-Path (Join-Path "dist" $distName) "server_config.txt"
-    Copy-Item "server_config.txt" $targetCfg -Force
+if ($OneFile) {
+    # Onefile output exe path differs
+    $distExe = Join-Path "dist" "$distName.exe"
+    if (Test-Path $distExe) {
+        Write-Host "Onefile exe built at $distExe" -ForegroundColor Green
+    } else {
+        Write-Host "WARNING: Expected onefile exe not found at $distExe" -ForegroundColor Yellow
+    }
+    # Copy server_config.txt next to release exe (not inside dist)
+} else {
+    # Folder mode copy config inside dist/MiniTCG
+    if (Test-Path "server_config.txt") {
+        New-Item -ItemType Directory -Force -Path (Join-Path "dist" $distName) | Out-Null
+        $targetCfg = Join-Path (Join-Path "dist" $distName) "server_config.txt"
+        Copy-Item "server_config.txt" $targetCfg -Force
+    }
 }
 
-Write-Host "Build complete: dist/$distName/$distName.exe" -ForegroundColor Green
-Write-Host "Distribute the dist/$distName folder. No Python required." -ForegroundColor Green
+if ($OneFile) {
+    Write-Host "Build complete (onefile): dist/$distName.exe" -ForegroundColor Green
+    Write-Host "Distribute just dist/$distName.exe (keep server_config.txt alongside if overriding URL)." -ForegroundColor Green
+} else {
+    Write-Host "Build complete: dist/$distName/$distName.exe" -ForegroundColor Green
+    Write-Host "Distribute the dist/$distName folder. No Python required." -ForegroundColor Green
+}
 
 # Make a top-level easy-access copy
 try {
     $releaseDir = "release"
     New-Item -ItemType Directory -Force -Path $releaseDir | Out-Null
-    $builtExe = Join-Path (Join-Path "dist" $distName) ("$distName.exe")
+    if ($OneFile) {
+        $builtExe = Join-Path "dist" ("$distName.exe")
+    } else {
+        $builtExe = Join-Path (Join-Path "dist" $distName) ("$distName.exe")
+    }
     if (Test-Path $builtExe) {
         $releaseExe = Join-Path $releaseDir ("$distName.exe")
         Copy-Item $builtExe $releaseExe -Force
+        # If onefile, also copy server_config.txt for convenience
+        if ($OneFile -and (Test-Path "server_config.txt")) {
+            Copy-Item "server_config.txt" (Join-Path $releaseDir "server_config.txt") -Force
+        }
         Write-Host "Copied easy-access exe to $releaseExe" -ForegroundColor Cyan
     } else {
         Write-Host "WARNING: Built exe not found at $builtExe" -ForegroundColor Yellow
