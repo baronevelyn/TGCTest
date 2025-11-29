@@ -14,14 +14,23 @@ except Exception:
     _TK_AVAILABLE = False
 
 if not _TK_AVAILABLE:
-    print("ERROR: No se encontró 'tkinter' en este sistema.\n"
-          "La versión onefile necesita soporte gráfico Tcl/Tk.\n\n"
-          "Opciones:\n"
-          "  - Usa la release v0.1.2 (modo carpeta) que pudo incluir los assets.\n"
-          "  - Instala Python oficial 3.11/3.12 con Tcl/Tk y reconstruye.\n"
-          "  - Pide una versión modo consola sin interfaz gráfica.\n\n"
-          "Solución rápida (instalar Python con Tk):\n"
-          "  winget install Python.Python.3.12\n")
+    _msg = (
+        "ERROR: No se encontró 'tkinter' en este sistema.\n"
+        "La versión onefile necesita soporte gráfico Tcl/Tk.\n\n"
+        "Opciones:\n"
+        "  - Usa una release construida con Python 3.12 (incluye Tk).\n"
+        "  - Instala Python oficial 3.12 con Tcl/Tk y reconstruye.\n"
+        "  - Pide una versión modo consola sin interfaz gráfica.\n\n"
+        "Solución rápida (instalar Python con Tk):\n"
+        "  winget install Python.Python.3.12\n"
+    )
+    try:
+        # Mostrar un MessageBox nativo si no hay tkinter
+        import ctypes
+        ctypes.windll.user32.MessageBoxW(0, _msg, "MiniTCG - Error Tk", 0x00000010)
+    except Exception:
+        pass
+    print(_msg)
     import sys
     sys.exit(1)
 import sys
