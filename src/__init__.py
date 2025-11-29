@@ -1,37 +1,18 @@
-"""
-Source package for Mini TCG.
-Contains all game logic, models, and UI components.
+"""Mini TCG source package.
+
+Lightweight package init to avoid circular import issues when freezing
+with PyInstaller. Modules are imported lazily on first attribute access.
 """
 
 __version__ = "2.0.0"
 __author__ = "Mini TCG Team"
 
-# Core modules (headless-safe)
-from . import models
-from . import cards
-from . import champions
-from . import game_logic
-
-# AI System (headless-safe)
-from . import ai_engine
-
-# UI modules (only import if tkinter is available - skip on server)
-try:
-    from . import difficulty_selector
-    from . import game_gui
-    from . import deck_builder
-    _UI_AVAILABLE = True
-except Exception:
-    _UI_AVAILABLE = False
-
-# Analysis
-from . import game_analysis
-
-__all__ = [
+_LAZY_MODULES = [
     'models',
     'cards',
     'champions',
     'game_logic',
+    'ai_engine',
     'ai_player',
     'ai_difficulty',
     'difficulty_selector',
@@ -39,3 +20,13 @@ __all__ = [
     'deck_builder',
     'game_analysis'
 ]
+
+def __getattr__(name):
+    if name in _LAZY_MODULES:
+        import importlib
+        module = importlib.import_module(f'{__name__}.{name}')
+        globals()[name] = module  # cache for future lookups
+        return module
+    raise AttributeError(f'module {__name__} has no attribute {name}')
+
+__all__ = _LAZY_MODULES[:]

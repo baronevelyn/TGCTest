@@ -9,7 +9,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-Write-Host "🔧 Preparing environment..." -ForegroundColor Cyan
+Write-Host "Preparing environment..." -ForegroundColor Cyan
 
 # Ensure venv (optional). If you already have an env, comment this out.
 if (-not (Test-Path ".venv")) {
@@ -20,23 +20,23 @@ if (-not (Test-Path ".venv")) {
 $venvPython = Join-Path ".venv" "Scripts/python.exe"
 $venvPip = Join-Path ".venv" "Scripts/pip.exe"
 if (-not (Test-Path $venvPython)) {
-    Write-Host "⚠️ venv python not found; falling back to system python" -ForegroundColor Yellow
+    Write-Host "WARNING: venv python not found; falling back to system python" -ForegroundColor Yellow
     $venvPython = "python"
     $venvPip = "pip"
 }
 
-Write-Host "📦 Installing build dependencies (pyinstaller)..." -ForegroundColor Cyan
+Write-Host "Installing build dependencies (pyinstaller)..." -ForegroundColor Cyan
 & $venvPip install --upgrade pip | Out-Null
 & $venvPip install pyinstaller | Out-Null
 
-Write-Host "📦 Installing app dependencies from requirements.txt..." -ForegroundColor Cyan
+Write-Host "Installing app dependencies from requirements.txt..." -ForegroundColor Cyan
 if (Test-Path "requirements.txt") {
     & $venvPip install -r requirements.txt
 }
 
 # Optional clean
 if ($Clean) {
-    Write-Host "🧹 Cleaning previous build" -ForegroundColor Cyan
+    Write-Host "Cleaning previous build" -ForegroundColor Cyan
     Remove-Item -Recurse -Force dist -ErrorAction SilentlyContinue
     Remove-Item -Recurse -Force build -ErrorAction SilentlyContinue
 }
@@ -74,7 +74,7 @@ foreach ($item in $assets) {
     }
 }
 
-Write-Host "🚀 Building $distName.exe from $entry" -ForegroundColor Green
+Write-Host "Building $distName.exe from $entry" -ForegroundColor Green
 
 $pyiArgs = @(
     "--name", $distName,
@@ -91,11 +91,12 @@ $pyiArgs += $entry
 # Copy server_config.txt if exists (runtime configurable)
 if (Test-Path "server_config.txt") {
     New-Item -ItemType Directory -Force -Path (Join-Path "dist" $distName) | Out-Null
-    Copy-Item "server_config.txt" (Join-Path "dist" $distName "server_config.txt") -Force
+    $targetCfg = Join-Path (Join-Path "dist" $distName) "server_config.txt"
+    Copy-Item "server_config.txt" $targetCfg -Force
 }
 
-Write-Host "✅ Build complete: dist/$distName/$distName.exe" -ForegroundColor Green
-Write-Host "📁 Distribute the dist/$distName folder. No Python required." -ForegroundColor Green
+Write-Host "Build complete: dist/$distName/$distName.exe" -ForegroundColor Green
+Write-Host "Distribute the dist/$distName folder. No Python required." -ForegroundColor Green
 
 # Make a top-level easy-access copy
 try {
@@ -105,10 +106,10 @@ try {
     if (Test-Path $builtExe) {
         $releaseExe = Join-Path $releaseDir ("$distName.exe")
         Copy-Item $builtExe $releaseExe -Force
-        Write-Host "📦 Copied easy-access exe to $releaseExe" -ForegroundColor Cyan
+        Write-Host "Copied easy-access exe to $releaseExe" -ForegroundColor Cyan
     } else {
-        Write-Host "⚠️ Built exe not found at $builtExe" -ForegroundColor Yellow
+        Write-Host "WARNING: Built exe not found at $builtExe" -ForegroundColor Yellow
     }
 } catch {
-    Write-Host "⚠️ Could not create easy-access copy: $($_.Exception.Message)" -ForegroundColor Yellow
+    Write-Host "WARNING: Could not create easy-access copy: $($_.Exception.Message)" -ForegroundColor Yellow
 }
