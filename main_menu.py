@@ -1,10 +1,29 @@
-"""
-Main menu for the TCG game.
+"""Main menu for the TCG game.
 Choose between deck builder, quick play, or play vs AI with difficulty selection.
+
+Graceful fallback if tkinter is not available (onefile build on systems
+without Tcl/Tk). Instead of crashing with ModuleNotFoundError it will
+emit a clear message and exit.
 """
 
-import tkinter as tk
-from tkinter import messagebox
+try:  # Lazy / guarded import to avoid hard crash on missing tkinter
+    import tkinter as tk
+    from tkinter import messagebox
+    _TK_AVAILABLE = True
+except Exception:
+    _TK_AVAILABLE = False
+
+if not _TK_AVAILABLE:
+    print("ERROR: No se encontró 'tkinter' en este sistema.\n"
+          "La versión onefile necesita soporte gráfico Tcl/Tk.\n\n"
+          "Opciones:\n"
+          "  - Usa la release v0.1.2 (modo carpeta) que pudo incluir los assets.\n"
+          "  - Instala Python oficial 3.11/3.12 con Tcl/Tk y reconstruye.\n"
+          "  - Pide una versión modo consola sin interfaz gráfica.\n\n"
+          "Solución rápida (instalar Python con Tk):\n"
+          "  winget install Python.Python.3.12\n")
+    import sys
+    sys.exit(1)
 import sys
 import os
 import subprocess
