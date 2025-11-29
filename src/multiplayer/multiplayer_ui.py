@@ -1723,13 +1723,13 @@ class MultiplayerGameUI:
         # Refresh hand to update clickability
         self.update_my_hand(self.my_hand)
     
-    def update_player_stats(self, life: int, mana: int, max_mana: int):
+    def update_player_stats(self, life: int, mana: int, max_mana: int, max_life: int | None = None, deck_count: int | None = None):
         """Update my stats"""
         # Check if anything changed
         # Clamp life to >= 0
         if life < 0:
             life = 0
-        new_hash = f"{life}:{mana}:{max_mana}"
+        new_hash = f"{life}:{mana}:{max_mana}:{max_life}:{deck_count}"
         if new_hash == self._last_update_hash.get('my_stats', ''):
             return  # No changes
         self._last_update_hash['my_stats'] = new_hash
@@ -1737,17 +1737,20 @@ class MultiplayerGameUI:
         self.my_life = life
         self.my_mana = mana
         self.my_max_mana = max_mana
-        self.my_info_label.config(text=f"🎮 {self.player_name} | ❤️ {life} | 💎 {mana}/{max_mana}")
+        # Build label with optional max_life and deck_count
+        life_text = f"❤️ {life}" if not max_life else f"❤️ {life}/{max_life}"
+        deck_text = f" | 📦 Deck: {deck_count}" if deck_count is not None else ""
+        self.my_info_label.config(text=f"🎮 {self.player_name} | {life_text} | 💎 {mana}/{max_mana}{deck_text}")
         # Check game over (only if opponent already known or during match)
         if life == 0:
             self._handle_game_over(winner="OPPONENT")
     
-    def update_opponent_stats(self, life: int, mana: int, max_mana: int, hand_count: int):
+    def update_opponent_stats(self, life: int, mana: int, max_mana: int, hand_count: int, max_life: int | None = None, deck_count: int | None = None):
         """Update opponent stats"""
         # Check if anything changed
         if life < 0:
             life = 0
-        new_hash = f"{life}:{mana}:{max_mana}:{hand_count}"
+        new_hash = f"{life}:{mana}:{max_mana}:{hand_count}:{max_life}:{deck_count}"
         if new_hash == self._last_update_hash.get('opponent_stats', ''):
             return  # No changes
         self._last_update_hash['opponent_stats'] = new_hash
@@ -1756,8 +1759,10 @@ class MultiplayerGameUI:
         self.opponent_mana = mana
         self.opponent_max_mana = max_mana
         self.opponent_hand_count = hand_count
+        life_text = f"❤️ {life}" if not max_life else f"❤️ {life}/{max_life}"
+        deck_text = f" | 📦 Deck: {deck_count}" if deck_count is not None else ""
         self.opponent_info_label.config(
-            text=f"🎮 {self.opponent_name} | ❤️ {life} | 💎 {mana}/{max_mana} | 🃏 {hand_count} cards"
+            text=f"🎮 {self.opponent_name} | {life_text} | 💎 {mana}/{max_mana} | 🃏 {hand_count} cards{deck_text}"
         )
         if life == 0:
             self._handle_game_over(winner="YOU")

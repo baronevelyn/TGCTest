@@ -112,6 +112,7 @@ def get_game_state_for_player(game: Game, player_sid: str, player_map: dict) -> 
     return {
         'my_state': {
             'life': my_player.life,
+            'max_life': getattr(my_player, 'max_life', my_player.life),
             'mana': my_player.mana,
             'max_mana': my_player.max_mana,
             'hand': [serialize_card(c) for c in my_player.hand],
@@ -121,6 +122,7 @@ def get_game_state_for_player(game: Game, player_sid: str, player_map: dict) -> 
         },
         'opponent_state': {
             'life': opponent_player.life,
+            'max_life': getattr(opponent_player, 'max_life', opponent_player.life),
             'mana': opponent_player.mana,
             'max_mana': opponent_player.max_mana,
             'hand_count': len(opponent_player.hand),  # Solo cantidad, no cartas

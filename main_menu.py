@@ -676,14 +676,18 @@ def _update_ui_from_state(ui, state: dict):
     ui.update_player_stats(
         life=my_state.get('life', 25),
         mana=my_state.get('mana', 0),
-        max_mana=my_state.get('max_mana', 0)
+        max_mana=my_state.get('max_mana', 0),
+        max_life=my_state.get('max_life', None),
+        deck_count=my_state.get('deck_count', None)
     )
     
     ui.update_opponent_stats(
         life=opponent_state.get('life', 25),
         mana=opponent_state.get('mana', 0),
         max_mana=opponent_state.get('max_mana', 0),
-        hand_count=opponent_state.get('hand_count', 0)
+        hand_count=opponent_state.get('hand_count', 0),
+        max_life=opponent_state.get('max_life', None),
+        deck_count=opponent_state.get('deck_count', None)
     )
 
     # Trigger life animations if changed
