@@ -208,6 +208,16 @@ def _start_quick_match():
             on_send_chat=lambda msg: network.sio.emit('chat_message', {'message': msg, 'room_id': network.room_id}),
             on_activate_ability=lambda idx: network.send_action({'action': 'activate_ability', 'card_index': idx})
         )
+        # Attach network to UI to receive synchronized events like game_over
+        try:
+            if hasattr(ui, 'attach_network'):
+                ui.attach_network(network)
+            # Also register explicit callback for safety (ensure None return type)
+            def _on_go(winner: str) -> None:
+                game_window.after(0, lambda: ui._handle_game_over(winner))
+            network.on_game_over = _on_go
+        except Exception:
+            pass
         
         # Setup state updates from server (thread-safe)
         def on_server_state(state):
@@ -392,6 +402,15 @@ def _find_custom_match(deck_data: list, champion_data: dict):
             on_send_chat=lambda msg: network.sio.emit('chat_message', {'message': msg, 'room_id': network.room_id}),
             on_activate_ability=lambda idx: network.send_action({'action': 'activate_ability', 'card_index': idx})
         )
+        # Attach network to UI to receive synchronized events like game_over
+        try:
+            if hasattr(ui, 'attach_network'):
+                ui.attach_network(network)
+            def _on_go2(winner: str) -> None:
+                game_window.after(0, lambda: ui._handle_game_over(winner))
+            network.on_game_over = _on_go2
+        except Exception:
+            pass
         
         # Setup state updates from server (thread-safe)
         def on_server_state(state):
