@@ -357,14 +357,6 @@ class Game:
                     target = target_player.active_zone[target_idx]
                     self.log_action(f"{spell.name} destroys {target.name}!")
                     self.destroy_card(target_player, target_idx)
-        # Clamp life values so they never go below 0
-        if self.player.life < 0:
-            self.player.life = 0
-        if self.ai.life < 0:
-            self.ai.life = 0
-        # After resolving spell effects, immediately check end of game
-        self.check_end()
-        
         elif spell.spell_effect == 'draw':
             # Draw cards
             cards_drawn = 0
@@ -411,6 +403,13 @@ class Game:
                 # Gain +2 mana this turn
                 caster_player.mana += 2
                 self.log_action(f"Draws {cards_drawn} cards and gains +2 mana this turn!")
+
+        # Clamp life values so they never go below 0 and check end after any spell resolution
+        if self.player.life < 0:
+            self.player.life = 0
+        if self.ai.life < 0:
+            self.ai.life = 0
+        self.check_end()
 
     def destroy_card(self, player: Player, card_index: int):
         """Remove a card from active zone to graveyard."""
