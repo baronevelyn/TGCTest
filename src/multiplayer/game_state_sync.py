@@ -65,11 +65,23 @@ class GameStateSync:
         def on_disconnect():
             """Handle opponent disconnection."""
             self._handle_opponent_disconnect()
+
+        def on_game_state_update(data):
+            """Handle full game state snapshot from server (includes draws)."""
+            try:
+                print("📦 [GAME_SYNC] Received full game_state_update from server")
+                self._apply_full_game_state(data)
+                print("   ✅ Full state applied")
+            except Exception as e:
+                print(f"   ❌ Error applying full state: {e}")
+                import traceback
+                traceback.print_exc()
         
         # Register callbacks with network manager
         self.network.on_opponent_action = on_action
         self.network.on_sync_request = on_sync_request
         self.network.on_opponent_disconnected = on_disconnect
+        self.network.on_game_state_update = on_game_state_update
     
     # ========================================================================
     # OUTGOING ACTIONS (Local player → Network)
@@ -329,6 +341,107 @@ class GameStateSync:
             print(f"   ⚠️ Error in turn transition: {e}")
             import traceback
             traceback.print_exc()
+
+    # ========================================================================
+    # FULL STATE APPLICATION (from server snapshot)
+    # ========================================================================
+
+    def _apply_full_game_state(self, data: Dict[str, Any]):
+        """Apply a full game state snapshot (server authoritative)."""
+        state = data.get('state', {})
+        if not state:
+            print("   ⚠️ No 'state' key in game_state_update payload")
+            return
+
+        turn = state.get('turn')
+        if turn:
+            self.game.turn = turn
+        player_state = state.get('player', {})
+        opponent_state = state.get('opponent', {})
+
+        from ..cards import Card
+
+        # Update local player (hand revealed)
+        if player_state:
+            self.game.player.life = player_state.get('life', self.game.player.life)
+            self.game.player.mana = player_state.get('mana', self.game.player.mana)
+            self.game.player.max_mana = player_state.get('max_mana', self.game.player.max_mana)
+
+            # Rebuild hand with real cards if provided
+            hand_cards = player_state.get('hand')
+            if hand_cards is not None:
+                self.game.player.hand.clear()
+                for c in hand_cards:
+                    card = Card(
+                        name=c.get('name', 'Unknown'),
+                        cost=c.get('cost', 0),
+                        damage=c.get('damage', 0),
+                        health=c.get('health', 1),
+                        ability=c.get('ability'),
+                        ability_desc=c.get('ability_desc'),
+                        card_type=c.get('card_type', 'troop')
+                    )
+                    card.current_health = c.get('current_health', card.health)
+                    card.ready = c.get('ready', True)
+                    self.game.player.hand.append(card)
+
+            # Active zone
+            active_zone = player_state.get('active_zone', [])
+            self.game.player.active_zone.clear()
+            for c in active_zone:
+                card = Card(
+                    name=c.get('name', 'Unknown'),
+                    cost=c.get('cost', 0),
+                    damage=c.get('damage', 0),
+                    health=c.get('health', 1),
+                    ability=c.get('ability'),
+                    ability_desc=c.get('ability_desc'),
+                    card_type=c.get('card_type', 'troop')
+                )
+                card.current_health = c.get('current_health', card.health)
+                card.ready = c.get('ready', True)
+                self.game.player.active_zone.append(card)
+
+        # Update opponent (hand hidden -> only size)
+        if opponent_state:
+            self.game.ai.life = opponent_state.get('life', self.game.ai.life)
+            self.game.ai.mana = opponent_state.get('mana', self.game.ai.mana)
+            self.game.ai.max_mana = opponent_state.get('max_mana', self.game.ai.max_mana)
+
+            opponent_hand_size = opponent_state.get('hand_size', len(self.game.ai.hand))
+            current_size = len(self.game.ai.hand)
+            if opponent_hand_size > current_size:
+                for _ in range(opponent_hand_size - current_size):
+                    dummy = Card("Hidden", 0, 0, 0, card_type="troop")
+                    self.game.ai.hand.append(dummy)
+            elif opponent_hand_size < current_size:
+                self.game.ai.hand = self.game.ai.hand[:opponent_hand_size]
+
+            # Active zone
+            active_zone = opponent_state.get('active_zone', [])
+            self.game.ai.active_zone.clear()
+            for c in active_zone:
+                card = Card(
+                    name=c.get('name', 'Unknown'),
+                    cost=c.get('cost', 0),
+                    damage=c.get('damage', 0),
+                    health=c.get('health', 1),
+                    ability=c.get('ability'),
+                    ability_desc=c.get('ability_desc'),
+                    card_type=c.get('card_type', 'troop')
+                )
+                card.current_health = c.get('current_health', card.health)
+                card.ready = c.get('ready', True)
+                self.game.ai.active_zone.append(card)
+
+        # Update local turn flag
+        self.my_turn = (self.game.turn == 'player')
+
+        try:
+            self.game.on_update()
+        except Exception as e:
+            print(f"   ⚠️ UI update failed after full state apply: {e}")
+
     
     def _apply_surrender(self, data: Dict[str, Any]):
         """Apply opponent surrender."""

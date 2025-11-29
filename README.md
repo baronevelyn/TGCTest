@@ -396,6 +396,18 @@ python utils/generate_spell_assets.py
 - Organización en carpetas
 - Documentación completa
 
+### Historial de Releases Recientes
+
+**v0.1.6** - Fix sincronización de robo en Multiplayer
+- Se añadió handler de `game_state_update` en el cliente para aplicar el snapshot completo del estado.
+- Las manos del oponente ahora reflejan correctamente el tamaño tras robos (se crean cartas "Hidden").
+- Corrige bug donde un jugador quedaba bloqueado con solo las 5 cartas iniciales.
+
+**v0.1.5** - Build OneFile funcional con GUI
+- Se reconstruyó con Python 3.12 + tkinter incluido.
+- Flags: `-OneFile -PythonExe -ForceVenv` en `build_exe.ps1`.
+- Soluciona salida silenciosa por ausencia de tkinter.
+
 ---
 
 ## 👥 Créditos
