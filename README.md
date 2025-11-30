@@ -398,6 +398,11 @@ python utils/generate_spell_assets.py
 
 ### Historial de Releases Recientes
 
+**v0.1.11** - Conexión robusta para largas distancias
+- Servidor: `SocketIO(ping_interval=25, ping_timeout=90, transports=['websocket','polling'])` para tolerar mayor latencia y jitter entre continentes.
+- Cliente: reconexión automática con backoff y preferencia WebSocket con fallback a polling.
+- Logs detallados activables con `DEBUG=True` en el servidor para diagnosticar.
+
 **v0.1.10** - Draw fijo en servidor
 - Servidor activa `server_mode` y `start_turn` roba para ambos lados.
 - Arregla definitivamente que el jugador que no empieza no robe.

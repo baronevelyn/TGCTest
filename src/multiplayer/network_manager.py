@@ -15,7 +15,14 @@ class NetworkManager:
         if server_url is None:
             server_url = self._read_server_config()
         self.server_url = server_url
-        self.sio: socketio.Client = socketio.Client()  # type: ignore
+        # Configurar cliente con reconexión robusta para conexiones inestables
+        self.sio: socketio.Client = socketio.Client(  # type: ignore
+            reconnection=True,
+            reconnection_attempts=10,
+            reconnection_delay=1.0,
+            reconnection_delay_max=10.0,
+            randomization_factor=0.2
+        )
         self.connected = False
         self.room_id: Optional[str] = None
         self.player_name: str = "Jugador"
@@ -181,7 +188,8 @@ class NetworkManager:
         """Conectar al servidor"""
         try:
             print(f'🔌 Conectando a {self.server_url}...')
-            self.sio.connect(self.server_url)
+            # Preferir WebSocket pero permitir fallback a polling si la red lo exige
+            self.sio.connect(self.server_url, transports=['websocket', 'polling'], wait=True, wait_timeout=10)
             return True
         except Exception as e:
             print(f'❌ Error al conectar: {e}')

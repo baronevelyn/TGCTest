@@ -27,7 +27,20 @@ from src.champions import CHAMPION_LIST
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mini-tcg-secret-2025'
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent')  # type: ignore
+
+# Permitir latencias más altas y compatibilidad de transporte para conexiones remotas
+# Activar logs detallados si DEBUG=True en entorno
+_debug_logs = os.environ.get('DEBUG', 'False') == 'True'
+socketio = SocketIO(
+    app,
+    cors_allowed_origins="*",
+    async_mode='gevent',
+    ping_interval=25,      # frecuencia de ping (s)
+    ping_timeout=90,       # tolerancia a latencia y jitter (s)
+    transports=['websocket', 'polling'],
+    logger=_debug_logs,
+    engineio_logger=_debug_logs
+)  # type: ignore
 
 # Almacenamiento de salas activas
 active_rooms = {}  # {room_id: {'players': [sid1, sid2], 'game': Game, 'player_map': {sid: 'player'/'ai'}, 'mode': 'quick'/'custom'}}
