@@ -398,6 +398,15 @@ python utils/generate_spell_assets.py
 
 ### Historial de Releases Recientes
 
+**v0.1.13** - Fix de lectura de configuración en ejecutable
+- Cliente: búsqueda de `server_config.txt` en múltiples ubicaciones (junto al .exe, directorio actual, raíz del proyecto).
+- Handler `connect_error` para diagnosticar fallos de conexión.
+- Logging mejorado para depuración de conexión.
+
+**v0.1.12** - Reintentos de conexión
+- Cliente: reintentos automáticos con timeouts crecientes (15s, 20s, 30s) y backoff (2s, 4s, 6s).
+- Mejora conexión inicial cuando el servidor está en cold start o hay latencia alta.
+
 **v0.1.11** - Conexión robusta para largas distancias
 - Servidor: `SocketIO(ping_interval=25, ping_timeout=90, transports=['websocket','polling'])` para tolerar mayor latencia y jitter entre continentes.
 - Cliente: reconexión automática con backoff y preferencia WebSocket con fallback a polling.

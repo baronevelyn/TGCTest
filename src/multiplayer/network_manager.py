@@ -46,22 +46,35 @@ class NetworkManager:
     
     def _read_server_config(self) -> str:
         """Lee la URL del servidor desde el archivo de configuración"""
-        config_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'server_config.txt')
         default_url = 'http://localhost:5000'
         
-        try:
-            if os.path.exists(config_path):
-                with open(config_path, 'r', encoding='utf-8') as f:
-                    for line in f:
-                        line = line.strip()
-                        if line.startswith('SERVER_URL=') and not line.startswith('#'):
-                            url = line.split('=', 1)[1].strip()
-                            if url:
-                                print(f'📡 Usando servidor desde config: {url}')
-                                return url
-        except Exception as e:
-            print(f'⚠️ Error leyendo config: {e}, usando {default_url}')
+        # Buscar server_config.txt en múltiples ubicaciones
+        # 1. Directorio del ejecutable (cuando está empaquetado con PyInstaller)
+        # 2. Directorio de trabajo actual
+        # 3. Directorio raíz del proyecto (para desarrollo)
+        search_paths = [
+            os.path.join(os.path.dirname(os.path.abspath(os.sys.executable if getattr(os.sys, 'frozen', False) else __file__)), 'server_config.txt'),
+            os.path.join(os.getcwd(), 'server_config.txt'),
+            os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'server_config.txt')
+        ]
         
+        for config_path in search_paths:
+            try:
+                if os.path.exists(config_path):
+                    print(f'📄 Intentando leer config de: {config_path}')
+                    with open(config_path, 'r', encoding='utf-8') as f:
+                        for line in f:
+                            line = line.strip()
+                            if line.startswith('SERVER_URL=') and not line.startswith('#'):
+                                url = line.split('=', 1)[1].strip()
+                                if url:
+                                    print(f'📡 Usando servidor desde config: {url}')
+                                    return url
+            except Exception as e:
+                print(f'⚠️ Error leyendo {config_path}: {e}')
+                continue
+        
+        print(f'⚠️ No se encontró server_config.txt, usando {default_url}')
         return default_url
     
     def _setup_handlers(self):
@@ -71,6 +84,11 @@ class NetworkManager:
         def on_connect():
             self.connected = True
             print('✅ Conectado al servidor')
+        
+        @self.sio.on('connect_error')  # type: ignore
+        def on_connect_error(data):
+            print(f'❌ Error de conexión: {data}')
+            self.connected = False
         
         @self.sio.on('disconnect')  # type: ignore
         def on_disconnect():
