@@ -185,15 +185,30 @@ class NetworkManager:
             print(f"[network] emit_game_over failed: {e}")
     
     def connect(self) -> bool:
-        """Conectar al servidor"""
-        try:
-            print(f'🔌 Conectando a {self.server_url}...')
-            # Preferir WebSocket pero permitir fallback a polling si la red lo exige
-            self.sio.connect(self.server_url, transports=['websocket', 'polling'], wait=True, wait_timeout=10)
-            return True
-        except Exception as e:
-            print(f'❌ Error al conectar: {e}')
-            return False
+        """Conectar al servidor con reintentos y mayor tolerancia a frío/latencia."""
+        import time
+        attempts = 0
+        delays = [2, 4, 6]
+        timeouts = [15, 20, 30]
+        while attempts < len(timeouts):
+            try:
+                if attempts == 0:
+                    print(f'🔌 Conectando a {self.server_url}...')
+                else:
+                    print(f'🔄 Reintentando conexión ({attempts+1}/{len(timeouts)})...')
+                self.sio.connect(
+                    self.server_url,
+                    transports=['websocket', 'polling'],
+                    wait=True,
+                    wait_timeout=timeouts[attempts]
+                )
+                return True
+            except Exception as e:
+                print(f'❌ Error al conectar (intento {attempts+1}): {e}')
+                if attempts < len(delays):
+                    time.sleep(delays[attempts])
+                attempts += 1
+        return False
     
     def disconnect(self):
         """Desconectar del servidor"""
