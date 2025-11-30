@@ -398,6 +398,15 @@ python utils/generate_spell_assets.py
 
 ### Historial de Releases Recientes
 
+**v0.1.8** - Corrección robo invitado
+- Auto `start_turn` al detectar cambio de turno vía snapshot (`game_state_update`).
+- Soluciona que el jugador que no empieza (invitado) no robara cartas.
+
+**v0.1.7** - Tk incluido + fallback
+- Reconstruido con Python 3.12 (Tk dentro del onefile).
+- Fallback con MessageBox nativo si faltara Tk.
+- Incluye fix de sincronización de robo (v0.1.6).
+
 **v0.1.6** - Fix sincronización de robo en Multiplayer
 - Se añadió handler de `game_state_update` en el cliente para aplicar el snapshot completo del estado.
 - Las manos del oponente ahora reflejan correctamente el tamaño tras robos (se crean cartas "Hidden").
