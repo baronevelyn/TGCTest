@@ -360,8 +360,17 @@ class GameStateSync:
         turn = state.get('turn')
         if turn:
             self.game.turn = turn
-        player_state = state.get('player', {})
-        opponent_state = state.get('opponent', {})
+        raw_player_state = state.get('player', {})
+        raw_opponent_state = state.get('opponent', {})
+
+        # Perspective correction: snapshots always built from host perspective ('player' = host)
+        # If we are guest (is_host == False), we must invert mapping so local player uses raw_opponent_state.
+        if self.is_host:
+            player_state = raw_player_state        # local
+            opponent_state = raw_opponent_state    # remote
+        else:
+            player_state = raw_opponent_state      # local (guest)
+            opponent_state = raw_player_state      # remote (host)
 
         from ..cards import Card
 
@@ -438,8 +447,12 @@ class GameStateSync:
                 card.ready = c.get('ready', True)
                 self.game.ai.active_zone.append(card)
 
-        # Update local turn flag
-        self.my_turn = (self.game.turn == 'player')
+        # Update local turn flag with perspective correction
+        if self.is_host:
+            self.my_turn = (self.game.turn == 'player')
+        else:
+            # For guest, when host says turn=='ai' it is guest's turn locally (ai from host pov)
+            self.my_turn = (self.game.turn == 'ai')
 
         # Detect transition: it is now our turn but we hadn't started it yet (guest draw fix)
         if self.my_turn and (not prev_my_turn) and (not self.turn_started):
