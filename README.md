@@ -398,6 +398,11 @@ python utils/generate_spell_assets.py
 
 ### Historial de Releases Recientes
 
+**v0.1.10** - Draw fijo en servidor
+- Servidor activa `server_mode` y `start_turn` roba para ambos lados.
+- Arregla definitivamente que el jugador que no empieza no robe.
+- Mantiene comportamiento singleplayer sin cambios.
+
 **v0.1.8** - Corrección robo invitado
 - Auto `start_turn` al detectar cambio de turno vía snapshot (`game_state_update`).
 - Soluciona que el jugador que no empieza (invitado) no robara cartas.
