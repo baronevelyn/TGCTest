@@ -220,6 +220,7 @@ def create_server_game(player1_sid, player2_sid, mode='quick', custom_data=None)
         game = Game(player1, player2, on_update=dummy_update)
         game.game_started = True  # Marcar como iniciado
         game.turn = 'player'  # Player1 (HOST) empieza
+        game.server_mode = True  # Activar modo servidor para que ambos lados roben al iniciar turno
         
         # Inicializar maná para ambos jugadores
         # Player1 empieza con 1 maná (turno 1)

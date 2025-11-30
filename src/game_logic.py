@@ -48,6 +48,8 @@ class Game:
             from .ai_engine import AIConfig
             default_config = AIConfig(5)
             self.ai_brain = DataDrivenAI(ai, default_config)
+        # Server authoritative mode flag (multiplayer server sets this True)
+        self.server_mode = False
 
     def start(self):
         """Initialize the game state."""
@@ -86,11 +88,13 @@ class Game:
         if p.champion and p.champion.ability_type == 'card_draw':
             draw_count = p.champion.ability_value
         
-        # draw card(s) for the player at start of their turn
-        if who == 'player':
+        # Draw card(s) at start of turn.
+        # In single-player we only draw for the local player (who == 'player').
+        # In server authoritative multiplayer (server_mode True) we draw for BOTH sides here.
+        if who == 'player' or self.server_mode:
             for _ in range(draw_count):
                 p.draw_card()
-            self.log_action(f"{p.name} draws {draw_count} card(s).")
+            self.log_action(f"{p.name} draws {draw_count} card(s) (turn start).")
         
         # move rest_zone -> active_zone, set ready True
         self.activate_rest_zone(p)
