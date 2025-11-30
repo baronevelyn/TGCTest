@@ -34,6 +34,8 @@ class GameStateSync:
         self.is_host = is_host
         self.my_turn = is_host  # Host starts first
         self.opponent_ready = False
+        # Track if we've already executed local start_turn logic this turn
+        self.turn_started = False
         
         # Callbacks for UI updates
         self.on_opponent_action: Optional[Callable[[str, Dict], None]] = None
@@ -331,6 +333,7 @@ class GameStateSync:
         
         # Switch turn to local player
         self.my_turn = True
+        self.turn_started = True  # We'll start the turn now
         print(f"   ✅ my_turn set to True - IT'S MY TURN NOW!")
         self.game.log_action("Your turn!")
         try:
@@ -352,7 +355,8 @@ class GameStateSync:
         if not state:
             print("   ⚠️ No 'state' key in game_state_update payload")
             return
-
+        prev_my_turn = self.my_turn
+        prev_turn = self.game.turn
         turn = state.get('turn')
         if turn:
             self.game.turn = turn
@@ -436,6 +440,18 @@ class GameStateSync:
 
         # Update local turn flag
         self.my_turn = (self.game.turn == 'player')
+
+        # Detect transition: it is now our turn but we hadn't started it yet (guest draw fix)
+        if self.my_turn and (not prev_my_turn) and (not self.turn_started):
+            try:
+                print("   🔄 Detected turn transition via snapshot -> starting local turn")
+                self.turn_started = True
+                self.game.start_turn('player')
+            except Exception as e:
+                print(f"   ⚠️ Could not auto-start turn from snapshot: {e}")
+        elif not self.my_turn:
+            # Reset flag when it's not our turn
+            self.turn_started = False
 
         try:
             self.game.on_update()
